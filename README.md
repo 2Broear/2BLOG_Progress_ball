@@ -1,7 +1,7 @@
 # 2BLOG_Progress_ball
-a document progress ball widget from wordpress theme 2blog.
+A multiple function document progress-ball widget from wordpress theme 2blog.
 
-#### 功能特性
+#### 功能简介
 
 - 文档进度（波浪动画及数字显示）
 - 顶部/底部直达按钮（可配置Emoji图标）
@@ -10,7 +10,7 @@ a document progress ball widget from wordpress theme 2blog.
 ![2blog_widget](https://raw.githubusercontent.com/2Broear/2BLOG_Progress_ball/main/2blog_progress_ball.gif "2blog progress ball")
 
 ## 使用说明
-提供两种初始化方式，可选择 _手动加载_ 脚本初始化，也可直接在前端脚本中使用 `xhr` _异步加载_ 资源完成初始化。
+可选 _手动加载_ 脚本初始化，也可直接在前端脚本中使用 `xhr` _异步加载_ 资源完成初始化。
 #### Usage 01
 外挂 `script` 脚本资源后初始化：
 ```html
@@ -29,7 +29,7 @@ fetch('https://your.domain/path/to/main.js').then(()=>{
 ## 初始化参数（可选）
 在初始化脚本时，可携带部分参数对象以重载脚本默认配置，常用配置项如下列表所示（`a->b` 表示对象 `a` 的子对象 `b`）：
 
-#### 静态参数
+#### static-> 静态参数
 
 | 参数 | 描述 | 类型 | 备注 |
 | :---- | :---- | :---- | :---- |
@@ -41,7 +41,7 @@ fetch('https://your.domain/path/to/main.js').then(()=>{
 | scheme->light | 文本颜色 | String | 默认 `whitesmoke` |
 | classs->switcher | 主题切换类 | String | 默认 `progress_switcher` |
 
-#### 元素参数
+#### element-> 元素参数
 
 | 参数 | 描述 | 类型 | 备注 |
 | :---- | :---- | :---- | :---- |
@@ -54,7 +54,7 @@ fetch('https://your.domain/path/to/main.js').then(()=>{
 | middle->icons->default | 主题切换元素图标（默认） | String | 默认：'☀️' |
 | middle->icons->actived | 主题切换元素图标（切换） | String | 默认：'🌙' |
 
-### 携带对象初始化示例
+### 携带对象参数初始化示例
 ```javascript
 // 自定义参数对象示例
 const custom_args = {
