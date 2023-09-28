@@ -3,16 +3,16 @@ A multiple function document progress-ball widget from wordpress theme 2blog.
 
 #### 功能简介
 
-- 文档进度（波浪动画及数字显示）
-- 顶部/底部直达按钮（可配置Emoji图标）
-- 可选页面显示模式切换（可手动适配）
+- 文档进度（波浪动画及实时数字显示）
+- 顶部/底部跳转按钮（可配置 emoji 图标或文字）
+- 可选页面显示模式切换（需手动适配及缓存）
 
 ![2blog_widget](https://raw.githubusercontent.com/2Broear/2BLOG_Progress_ball/main/2blog_progress_ball.gif "2blog progress ball")
 
 ## 使用说明
 可选 _手动加载_ 脚本初始化，也可直接在前端脚本中使用 `xhr` _异步加载_ 资源完成初始化。
 #### Usage 01
-外挂 `script` 脚本资源后初始化：
+外挂 `script` 脚本后初始化：
 ```html
 <script src="https://your.domain/path/to/main.js"></script>
 <script>
@@ -20,13 +20,13 @@ A multiple function document progress-ball widget from wordpress theme 2blog.
 </script>
 ```
 #### Usage 02
-异步加载脚本资源完成初始化（fetch 示例）：
+异步加载脚本后初始化（fetch 示例）：
 ```javascript
 fetch('https://your.domain/path/to/main.js').then(()=>{
     new progress_ball.init();
 });
 ```
-## 初始化参数（可选）
+### 初始化参数（可选）
 在初始化脚本时，可携带部分参数对象以重载脚本默认配置，常用配置项如下列表所示（`a->b` 表示对象 `a` 的子对象 `b`）：
 
 #### static-> 静态参数
@@ -45,18 +45,18 @@ fetch('https://your.domain/path/to/main.js').then(()=>{
 
 | 参数 | 描述 | 类型 | 备注 |
 | :---- | :---- | :---- | :---- |
-| sw_target | 主题切换应用元素 | Element | 默认 `document.body`；点击主题切换后此元素将切换指定 class |
-| top->text | 顶部元素文本 | String | 默认：'顶' |
-| top->icon | 顶部元素图标 | String | __默认空值：__'' |
-| bottom->text | 底部元素文本 | String | 默认：'底' |
-| bottom->icon | 底部元素图标 | String | __默认空值：__'' |
-| middle->text | 主题切换元素文本 | String | __默认空值：__'' |
-| middle->icons->default | 主题切换元素图标（默认） | String | 默认：'☀️' |
-| middle->icons->actived | 主题切换元素图标（切换） | String | 默认：'🌙' |
+| sw_target | 主题切换应用元素 | Element | 默认：`document.body`；点击主题切换按钮后此元素将应用指定 class 类：`static->classs->switcher` |
+| top->text | 顶部元素文本 | String | 默认："顶" |
+| top->icon | 顶部元素图标 | String | 默认：""__（空）__ |
+| bottom->text | 底部元素文本 | String | 默认："底" |
+| bottom->icon | 底部元素图标 | String | 默认：""__（空）__ |
+| middle->text | 主题切换元素文本 | String | 默认：""__（空）__ |
+| middle->icons->default | 主题切换元素图标（默认） | String | 默认："☀️" |
+| middle->icons->actived | 主题切换元素图标（切换） | String | 默认："🌙" |
 
-### 携带对象参数初始化示例
+#### 携带对象参数初始化示例
 ```javascript
-// 自定义参数对象示例
+// 自定义参数对象
 const custom_args = {
     static: {
         scheme: {
@@ -79,4 +79,4 @@ new progress_ball.init(custom_args);
 ```
 
 ## 其他
-有任何问题及建议可提 issue
+任何问题及建议可提 issue.
