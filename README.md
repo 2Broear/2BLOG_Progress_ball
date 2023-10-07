@@ -45,16 +45,17 @@ fetch('https://your.domain/path/to/main.js').then(()=>{
 
 | 参数 | 类型 | 描述 | 备注 |
 | :---- | :---- | :---- | :---- |
-| sw_target | DOM | 主题切换应用元素 | 默认 `document.body`；点击主题切换按钮后此元素将应用指定 class 类：`static->classs->switcher` |
+| sc_window | HTMLElement | 页面滚动视窗 | 缺省 `window`；可指定页面滚动盒子元素 |
+| sw_target | HTMLElement | 主题切换元素 | 缺省 `document.body`；点击主题切换按钮后此元素将应用指定 class 类：`static->classs->switcher` |
 | top->text | String | 顶部元素文本 | 默认 `顶` |
-| top->icon | String | 顶部元素图标 | 默认 __（空）__ |
+| top->icon | String | 顶部元素图标 | 默认 __空__ |
 | bottom->text | String | 底部元素文本 | 默认 `底` |
-| bottom->icon | String | 底部元素图标 | 默认 __（空）__ |
-| middle->text | String | 主题切换元素文本 | 默认 __（空）__ |
+| bottom->icon | String | 底部元素图标 | 默认 __空__ |
+| middle->text | String | 主题切换元素文本 | 默认 __空__ |
 | middle->icons->default | String | 主题切换元素图标（默认） | 默认 `☀️` |
 | middle->icons->actived | String | 主题切换元素图标（切换） | 默认 `🌙` |
 
-#### 携带对象参数初始化示例
+#### 携带参数初始化示例
 ```javascript
 // 自定义参数对象
 const custom_args = {
