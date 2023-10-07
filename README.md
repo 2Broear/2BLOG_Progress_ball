@@ -14,7 +14,7 @@ A multiple function document progress-ball widget from wordpress theme 2blog.
 #### Usage 01
 外挂 `script` 标签后初始化：
 ```html
-<script src="https://your.domain/path/to/main.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/2Broear/2BLOG_Progress_ball/main.js"></script>
 <script>
     new progress_ball.init();
 </script>
@@ -22,7 +22,7 @@ A multiple function document progress-ball widget from wordpress theme 2blog.
 #### Usage 02
 异步加载脚本后初始化（`fetch` 示例）：
 ```javascript
-fetch('https://your.domain/path/to/main.js').then(()=>{
+fetch('https://cdn.jsdelivr.net/gh/2Broear/2BLOG_Progress_ball/main.js').then(()=>{
     new progress_ball.init();
 });
 ```
@@ -34,8 +34,8 @@ fetch('https://your.domain/path/to/main.js').then(()=>{
 | 参数 | 描述 | 类型 | 备注 |
 | :---- | :---- | :---- | :---- |
 | size | 进度球大小 | Number | 默认 `50` px |
-| smooth->scroll | 滚动间隔 | Number | 默认 `200` ms；值越小滚动越流畅（可能消耗性能） |
-| smooth->click | 点击间隔 | Number | 默认 `200` ms；值越大点击延时越长（防止频繁点击） |
+| smooth->scroll | 滚动间隔 | Number | 默认 `200` ms；值越小滚动组件越流畅（页面性能消耗） |
+| smooth->click | 点击间隔 | Number | 默认 `200` ms；值越大点击延时越长（阻止频繁点击） |
 | scheme->theme | 主题颜色 | String | 默认 `#eb6844` |
 | scheme->heavy | 背景颜色 | String | 默认 `#4a4a4a` |
 | scheme->light | 文本颜色 | String | 默认 `whitesmoke` |
