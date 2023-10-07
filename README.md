@@ -31,28 +31,28 @@ fetch('https://your.domain/path/to/main.js').then(()=>{
 
 #### static-> 静态参数
 
-| 参数 | 描述 | 类型 | 备注 |
+| 参数 | 类型 | 描述 | 备注 |
 | :---- | :---- | :---- | :---- |
-| size | 进度球大小 | Number | 默认 `50` px |
-| smooth->scroll | 滚动间隔 | Number | 默认 `200` ms；值越小滚动组件越流畅（页面性能消耗） |
-| smooth->click | 点击间隔 | Number | 默认 `200` ms；值越大点击延时越长（阻止频繁点击） |
-| scheme->theme | 主题颜色 | String | 默认 `#eb6844` |
-| scheme->heavy | 背景颜色 | String | 默认 `#4a4a4a` |
-| scheme->light | 文本颜色 | String | 默认 `whitesmoke` |
-| classs->switcher | 主题切换类 | String | 默认 `progress_switcher` |
+| size | Number | 进度球大小 | 默认 `50` px |
+| smooth->scroll | Number | 滚动间隔 | 默认 `200` ms；值越小组件显示越流畅（页面性能消耗） |
+| smooth->click | Number | 点击间隔 | 默认 `200` ms；值越大点击延时越长（阻止频繁点击） |
+| scheme->theme | String | 主题颜色 | 默认 `#eb6844` |
+| scheme->heavy | String | 背景颜色 | 默认 `#4a4a4a` |
+| scheme->light | String | 文本颜色 | 默认 `whitesmoke` |
+| classs->switcher | String | 主题切换类 | 默认 `progress_switcher` |
 
 #### element-> 元素参数
 
-| 参数 | 描述 | 类型 | 备注 |
+| 参数 | 类型 | 描述 | 备注 |
 | :---- | :---- | :---- | :---- |
-| sw_target | 主题切换应用元素 | Element | 默认 `document.body`；点击主题切换按钮后此元素将应用指定 class 类：`static->classs->switcher` |
-| top->text | 顶部元素文本 | String | 默认 `顶` |
-| top->icon | 顶部元素图标 | String | 默认 __（空）__ |
-| bottom->text | 底部元素文本 | String | 默认 `底` |
-| bottom->icon | 底部元素图标 | String | 默认 __（空）__ |
-| middle->text | 主题切换元素文本 | String | 默认 __（空）__ |
-| middle->icons->default | 主题切换元素图标（默认） | String | 默认 `☀️` |
-| middle->icons->actived | 主题切换元素图标（切换） | String | 默认 `🌙` |
+| sw_target | DOM | 主题切换应用元素 | 默认 `document.body`；点击主题切换按钮后此元素将应用指定 class 类：`static->classs->switcher` |
+| top->text | String | 顶部元素文本 | 默认 `顶` |
+| top->icon | String | 顶部元素图标 | 默认 __（空）__ |
+| bottom->text | String | 底部元素文本 | 默认 `底` |
+| bottom->icon | String | 底部元素图标 | 默认 __（空）__ |
+| middle->text | String | 主题切换元素文本 | 默认 __（空）__ |
+| middle->icons->default | String | 主题切换元素图标（默认） | 默认 `☀️` |
+| middle->icons->actived | String | 主题切换元素图标（切换） | 默认 `🌙` |
 
 #### 携带对象参数初始化示例
 ```javascript
