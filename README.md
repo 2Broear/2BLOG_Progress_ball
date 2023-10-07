@@ -22,7 +22,7 @@ A multiple function document progress-ball widget from wordpress theme 2blog.
 #### Usage 02
 异步加载脚本后初始化（`fetch` 示例）：
 ```javascript
-fetch('https://cdn.jsdelivr.net/gh/2Broear/2BLOG_Progress_ball/main.js').then(()=>{
+fetch('https://your.domain/path/to/main.js').then(()=>{
     new progress_ball.init();
 });
 ```
