@@ -1,3 +1,4 @@
+'use strict';
 const progress_ball = {
     dom: {
         elements: [{
@@ -82,7 +83,7 @@ const progress_ball = {
             closure_debouncer: (callback=false, delay=200)=>{
                 var timer = null;
                 return function(){
-                    timer ? clearTimeout(timer) : timer;
+                    if(timer) clearTimeout(timer);
                     timer = setTimeout(function(){
                         callback.apply(this, arguments);
                     },delay)
@@ -143,24 +144,26 @@ const progress_ball = {
                       INT = PRO.init;
                 // rewrite user-conf.
                 let that = this;
-                if(that.__proto__ !== INT.prototype){
+                if(Object.getPrototypeOf(that) !== INT.prototype){
                     that = INT.prototype;
                     // throw new Error('"new" generator progress init required.');
                     console.warn('keyword "new" is recommended for initiate, current pointed:', this);
                 }
+                // const _presets = that._preseter();
                 Object.defineProperty(that, '_conf', {
-                    value: that._rewriter.call(that, user_conf),
+                    // value: _presets._rewriter.apply(that, [user_conf, _presets]),
+                    value: that._singleton_conf._rewriter.call(that, user_conf),
                     // enumerable: true,
                 });
-                conf = (INT.conf = that._conf);
+                user_conf = (INT.conf = that._conf);
                 // init dom..
-                PRO.dom.initiate(); // PRO.dom.elements.push(conf.element);
+                PRO.dom.initiate();
                 // load dom..
-                document.body.appendChild(conf.element.wrapper);
+                document.body.appendChild(user_conf.element.wrapper);
                 // bind/exec dom event..
                 const pro_mods = PRO.mods,
-                      scroll_window = pro_mods.methods.dom_validator(conf.element.sc_window, window);
-                scroll_window.addEventListener('scroll', pro_mods.behavior.scroll_handler.call(PRO, conf.static.smooth.scroll), true);
+                      scroll_window = pro_mods.methods.dom_validator(user_conf.element.sc_window, window);
+                scroll_window.addEventListener('scroll', pro_mods.behavior.scroll_handler.call(PRO, user_conf.static.smooth.scroll), true);
                 // init done.
                 console.log('progress initiated.', PRO);
             } catch (error) {
@@ -171,72 +174,42 @@ const progress_ball = {
 };
 
 Object.defineProperties(progress_ball.init.prototype, {
-    _presets: {
-        value: {
-            static: {
-                size: 50,
-                smooth: {
-                    scroll: 200,
-                    click: 200,
-                },
-                scheme: {
-                    theme: '#eb6844',
-                    light: 'whitesmoke',
-                    heavy: '#4a4a4a',
-                },
-                classs: {
-                    wrapper: 'progress_widget',
-                    container: 'progress_ball',
-                    switcher: 'progress_switcher',
-                    show: 'pull_up',
-                    wave: 'wave_up',
-                },
-            },
-            element: {
-                sc_window: null,
-                sw_target: null,
-                wrapper: null,
-                top: {
-                    class: 'top',
-                    text: '顶',
-                    icon: '',
-                },
-                middle: {
-                    class: 'middle',
-                    text: '',
-                    icons: {
-                        default: '☀️',
-                        actived: '🌙',
+    _singleton_conf: {
+        value: function(){
+            let private_presets = {
+                    static: {
+                        size: 50,
+                        smooth: {scroll: 200,click: 200,},
+                        scheme: {theme: '#eb6844',light: 'whitesmoke',heavy: '#4a4a4a',},
+                        classs: {wrapper: 'progress_widget',container: 'progress_ball',switcher: 'progress_switcher',show: 'pull_up',wave: 'wave_up',},
+                    },
+                    element: {
+                        wrapper: null,
+                        sc_window: null,
+                        sw_target: null,
+                        top: {class: 'top',text: '顶',icon: '',},
+                        middle: {class: 'middle',text: '',icons: {default: '☀️',actived: '🌙',}},
+                        bottom: {class: 'bottom',text: '底',icon: '',},
+                        percent: {class: 'percent',text: '0',},
+                    },
+                };
+            return {
+                // private_preset: private_presets,
+                public_default: Object.create(null),
+                _rewriter: function fn(conf=this.public_default, opts=private_presets) {
+                    if(opts &&typeof opts === "object"){
+                        for(const [key, val] of Object.entries(opts)){
+                            conf[key] ||= val;  // back-write (mark non-existent property)
+                            // this._rewriter.apply(this, [opts[key], val]);
+                            fn.apply(this, [conf[key], val]);  // recursion-loop (use fn insted for recursion-func)
+                            // arguments.callee.apply(this, [conf[key], val]);
+                        }
                     }
+                    private_presets = null;  // clear closure recycle-quotes
+                    return conf;
                 },
-                bottom: {
-                    class: 'bottom',
-                    text: '底',
-                    icon: '',
-                },
-                percent: {
-                    class: 'percent',
-                    text: '0'
-                },
-            },
-        },
-        writable: false,
-        enumerable: false,
-        configurable: false,
-    },
-    _rewriter: {
-        // notice: unable to set falsy value(0) in user-conf while initializing
-        value: function(opts={}, _s=this._presets) {
-            if(_s &&typeof _s === "object"){
-                for(const [key, val] of Object.entries(_s)){
-                    // back-write (mark non-existent property)
-                    opts[key] ||= val;
-                    // recursion-loop
-                    this._rewriter.apply(this, [opts[key], val]);
-                }
             }
-            return opts;
-        },
+        }(),
         configurable: false,
     },
 });
