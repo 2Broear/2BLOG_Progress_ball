@@ -7,6 +7,7 @@ const progress_ball = {
         initiate: function(){
             const _p = progress_ball,
                   _m = _p.mods.methods,
+                  _b = _p.mods.behavior,
                   _s = _p.init?.conf,
                   s_ = _s.static,
                   _c = s_.classs,
@@ -33,20 +34,20 @@ const progress_ball = {
                 }
             }
             let w_ = document.createElement('DIV'),
-                b_ = document.createElement('DIV');
+                c_ = document.createElement('DIV');
             w_.className = _c.wrapper;
-            b_.className = _c.container;
-                b_.appendChild(_m.dom_binder.apply(_e, [_e.top.class, `<em data-icon="${_e.top.icon}">${_e.top.text}</em>`, ()=>{
-                    _m.scroll_click.call(_p, _e.top, ()=>scroll_window.scrollTo(0, 0));
+            c_.className = _c.container;
+                c_.appendChild(_m.dom_binder.apply(_e, [_e.top.class, `<em data-icon="${_e.top.icon}">${_e.top.text}</em>`, ()=>{
+                    _b.scroll_click.call(_p, _e.top, ()=>scroll_window.scrollTo(0, 0));
                 }]));
-                b_.appendChild(_m.dom_binder.apply(_e, [_e.middle.class, `<i data-icon="${_e.middle.icons.default}">${_e.middle.text}</i>`, ()=>{
-                    _m.scroll_click.call(_p, _e.middle, ()=>_m.theme_switcher.call(_p));
+                c_.appendChild(_m.dom_binder.apply(_e, [_e.middle.class, `<i data-icon="${_e.middle.icons.default}">${_e.middle.text}</i>`, ()=>{
+                    _b.scroll_click.call(_p, _e.middle, ()=>_m.theme_switcher.call(_p));
                 }]));
-                b_.appendChild(_m.dom_binder.apply(_e, [_e.bottom.class, `<em data-icon="${_e.bottom.icon}">${_e.bottom.text}</em>`, ()=>{
-                    _m.scroll_click.call(_p, _e.bottom, ()=>scroll_window.scrollTo(0, 99999));
+                c_.appendChild(_m.dom_binder.apply(_e, [_e.bottom.class, `<em data-icon="${_e.bottom.icon}">${_e.bottom.text}</em>`, ()=>{
+                    _b.scroll_click.call(_p, _e.bottom, ()=>scroll_window.scrollTo(0, 99999));
                 }]));
-                b_.appendChild(_m.dom_binder.apply(_e, [_e.percent.class, `<b data-percent="${_e.percent.text}"></b><i class="wave"><span></span></i>`]));
-            w_.appendChild(b_);
+                c_.appendChild(_m.dom_binder.apply(_e, [_e.percent.class, `<b data-percent="${_e.percent.text}"></b><i class="wave"><span></span></i>`]));
+            w_.appendChild(c_);
             _e.wrapper = w_;
         },
     },
@@ -60,15 +61,8 @@ const progress_ball = {
                 if(el_event && typeof(el_event)==='function') el_event();
                 return el;
             },
-            scroll_click: function(t, f){
-                if(!t) return;
-                try {
-                    if(!f || typeof(f)!=='function') throw new Error('scroll callback invalid');
-                    let debounce_click = this.mods.methods.closure_debouncer(f, this.init.conf.static.smooth.click);
-                    t.onclick = ()=>debounce_click();
-                } catch (error) {
-                    console.log(error)
-                }
+            dom_validator: (org_el, bak_el=null)=>{
+                return !org_el || org_el instanceof HTMLElement===false ? bak_el : org_el;
             },
             theme_switcher: function(){
                 const _s = this.init?.conf,
@@ -76,9 +70,6 @@ const progress_ball = {
                       sw_classs = _s.static.classs.switcher;
                 sw_target.classList.contains(sw_classs) ? sw_target.classList.remove(sw_classs) : sw_target.classList.add(sw_classs);
                 console.log('theme switching..', sw_target);
-            },
-            dom_validator: (org_el, bak_el=null)=>{
-                return !org_el || org_el instanceof HTMLElement===false ? bak_el : org_el;
             },
             closure_debouncer: (callback=false, delay=200)=>{
                 var timer = null;
@@ -102,15 +93,27 @@ const progress_ball = {
             },
         },
         behavior: {
+            scroll_click: function(t, f){
+                if(!t) return;
+                try {
+                    if(!f || typeof(f)!=='function') throw new Error('scroll callback invalid');
+                    const debounce_smooth = this.init.conf.static.smooth.click,
+                          debounce_events = this.mods.methods.closure_debouncer(f, debounce_smooth);
+                    t.onclick = ()=>debounce_events();
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             scroll_fn: function(event){
                 const e = event || window.event,
                     t = e.target || e.srcElement,
                     _s = this.init?.conf,
                     _e = _s.element,
                     validFrame = this.mods.methods.dom_validator(_e.sc_window),
-                    scrollFrame = validFrame ? validFrame : document;
+                    scrollFrame = validFrame ? validFrame : document;  // default #document but document.documentElement
                 if(t!==scrollFrame) return; // scrollFrame only
                 try {
+                    if(validFrame) scrollFrame.style.cssText = "scroll-behavior: smooth;";
                     let _c = _s.static.classs,
                         waves = _c.wave,
                         shows = _c.show,
@@ -163,7 +166,7 @@ const progress_ball = {
                 // bind/exec dom event..
                 const pro_mods = PRO.mods,
                       scroll_window = pro_mods.methods.dom_validator(user_conf.element.sc_window, window);
-                scroll_window.addEventListener('scroll', pro_mods.behavior.scroll_handler.call(PRO, user_conf.static.smooth.scroll), true);
+                scroll_window.addEventListener('scroll', pro_mods.behavior.scroll_handler.call(PRO, user_conf.static.smooth.scroll), false);
                 // init done.
                 console.log('progress initiated.', PRO);
             } catch (error) {
